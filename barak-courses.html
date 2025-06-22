@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARAK AI - קורסים</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a0d3d 0%, #2d1b69 25%, #4a2c8a 50%, #6a4c93 75%, #8b5a9b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Animated background stars */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 30px 0;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+            margin-bottom: 10px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255, 0, 110, 0.5); }
+            to { text-shadow: 0 0 40px rgba(255, 0, 110, 0.8), 0 0 60px rgba(131, 56, 236, 0.6); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0ff;
+            margin-bottom: 20px;
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #00f5ff, #0080ff);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Course grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .course-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .course-card:hover::before {
+            left: 100%;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 0, 110, 0.3);
+            border-color: #ff006e;
+        }
+
+        .course-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .course-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .course-description {
+            color: #c0c0c0;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .course-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4);
+        }
+
+        /* Neon effects */
+        .neon-border {
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff) 1;
+            animation: neon-flicker 3s infinite;
+        }
+
+        @keyframes neon-flicker {
+            0%, 100% { border-image: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff) 1; }
+            50% { border-image: linear-gradient(45deg, #3a86ff, #ff006e, #8338ec) 1; }
+        }
+
+        /* Robot mascot */
+        .robot-mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+            animation: float 3s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated stars background -->
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="https://i.postimg.cc/sgRgzwGc/my-logo.png" alt="BARAK" class="logo-image" style="width: 300px; height: auto;">
+<p style="font-size: 20px; line-height: 1.8;">
+  <strong>
+    העולם משתנה, הטכנולוגיה רצה.<br>
+    בזמן שאנחנו מתמודדים עם שגרה לא שגרתית – העתיד כבר כאן.<br>
+    ריכזנו עבורכם רשימה של תכנים ברמות שונות שיעזרו לכם להכיר את הבינה המלאכותית ולשלב אותה ביום-יום.
+  </strong>
+</p>
+
+
+
+
+
+</p>
+            <img src="https://i.postimg.cc/kgxDRkPz/my-la.png" alt="BARAK" class="logo-image" style="width: 200px; height: auto;">
+        </div>
+
+        <!-- Courses Grid -->
+        <div class="courses-grid">
+            <!-- Course 1 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">🧠</span>
+                <h3 class="course-title">בינה מלאכותית למתחילים</h3>
+                <p class="course-description">הכירו את עולם הבינה המלאכותית והמושגים הבסיסיים. קורס מקיף לכל המעוניינים להתחיל את המסע בתחום הטכנולוגיה המתקדמת.</p>
+                <a href="https://campus.gov.il/course/digitalil-gov-beai-he" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 2 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">💻</span>
+                <h3 class="course-title">תכנות Python</h3>
+                <p class="course-description">למדו את שפת התכנות הפופולרית ביותר בעולם הנתונים והבינה המלאכותית. קורס מעשי עם פרויקטים אמיתיים.</p>
+                <a href="https://github.com/PythonFreeCourse/Notebooks/" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 3 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">🧬</span>
+                <h3 class="course-title">בינה מלאכותית ועוד</h3>
+                <p class="course-description">מגוון סרטונים, וובינרים ותכנים מעולם ה-AI.</p>
+                <a href="https://letsai.co.il/courses/watch/" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 4 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">🤖</span>
+                <h3 class="course-title">למידת מכונה</h3>
+                <p class="course-description">קורס מתקדם בלמידת מכונה - אלגוריתמים, מודלים וביצועים. בנו בוטים חכמים ומערכות אוטונומיות.</p>
+                <a href="https://www.coursera.org/specializations/machine-learning-introduction?action=enroll" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 5 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">👾</span>
+                <h3 class="course-title">סוכני AI</h3>
+                <p class="course-description">סדרת שיעורים חדשה מבית מיקרוסופט המלמדת איך לבנות סוכני בינה מלאכותית (AI Agents)</p>
+                <a href="https://github.com/microsoft/ai-agents-for-beginners" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 6 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">⚛️</span>
+                <h3 class="course-title">אקדמיית OpenAI</h3>
+                <p class="course-description">למדו על מוצרים חדשים ופתרונות מתקדמים ישירות ממומחי OpenAI - תוך שמירה על עדכונים ומוכנות לחדשנות..</p>
+                <a href="https://academy.openai.com/" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 7 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">📱</span>
+                <h3 class="course-title">Generative AI Studio</h3>
+                <p class="course-description">התנסות מעשית עם פלטפורמת הענן של Google התנסות בבניית מודלים, יצירת תכנים ושימוש ביכולות  AI מוכנות.</p>
+                <a href="https://www.coursera.org/projects/googlecloud-get-started-with-generative-ai-studio-2hgqt" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 8 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">☁️</span>
+                <h3 class="course-title">Cloud Computing</h3>
+                <p class="course-description">חברת NVIDIA מציעה מגוון קורסים ללמידת תכנות AI ללא תשלום .</p>
+                <a href="https://learn.nvidia.com/en-us/training/self-paced-courses" class="course-link">לקורס ➜</a>
+            </div>
+
+            <!-- Course 9 -->
+            <div class="course-card neon-border">
+                <span class="course-icon">🎙️</span>
+                <h3 class="course-title">פודקאסט - לומדים AI</h3>
+                <p class="course-description">הפודקאסט שעוזר לכם לנווט בתוך עולם טכנולוגי מבלי להרגיש הצפה טוטאלית</p>
+                <a href="https://open.spotify.com/show/4ZniwrK1YaYRh9CLZxQ7T4?si=9d1342c821084e38" class="course-link">לקורס ➜</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Robot mascot -->
+    <div class="robot-mascot" onclick="scrollToTop()">
+        🚀
+    </div>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numberOfStars = 100;
+            
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 1) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add smooth scrolling and hover effects
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            
+            // Add click animation to course cards
+            const courseCards = document.querySelectorAll('.course-card');
+            courseCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+            
+            // Add parallax effect to background
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+                document.body.style.backgroundPosition = `center ${rate}px`;
+            });
+        });
+    </script>
+</body>
+</html>
